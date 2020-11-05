@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 
 const Item = (props) => {
-    const { index, id, name, cost, value, numOwned, handleClick } = props;
+    const { index, id, name, cost, value, numOwned, handleClick, upgrade, upgradeClick } = props;
     // autofocus first item on load
     const ref = useRef(null);
 
@@ -14,16 +14,29 @@ const Item = (props) => {
 
         }
     }, [])
-    return (
-        <Button ref={ref} key={id} onClick={handleClick}>
-            <Player>
-                <h2>{name}</h2>
-                <p>Cost: {cost}, produces {value} cookie(s)/second </p>
-            </Player>
+    if (upgrade === "doubles") {
+        return (
+            <Button ref={ref} key={id} onClick={upgradeClick}>
+                <Player>
+                    <h2>{name}</h2>
+                    <p>Cost: {cost}, {upgrade} cookies per click</p>
+                </Player>
 
-            <Number>{numOwned}</Number>
-        </Button>
-    )
+                <Number>{numOwned}</Number>
+            </Button>
+        )
+    } else {
+        return (
+            <Button ref={ref} key={id} onClick={handleClick}>
+                <Player>
+                    <h2>{name}</h2>
+                    <p>Cost: {cost}, produces {value} cookie(s)/second </p>
+                </Player>
+
+                <Number>{numOwned}</Number>
+            </Button>
+        )
+    }
 }
 
 export default Item;
